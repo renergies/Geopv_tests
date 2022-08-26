@@ -9,6 +9,7 @@ use App\Entity\Ticket;
 use App\Entity\Payment;
 use App\Form\NewAnswerFormType;
 use App\Form\NewTicketFormType;
+use App\Form\NewPaymentFormType;
 use App\Form\ProfileEditFormType;
 use App\Repository\UserRepository;
 use App\Repository\AnswerRepository;
@@ -18,9 +19,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use App\Form\NewPaymentFormType;
 
 class UserController extends AbstractController
 {    
@@ -271,7 +272,7 @@ class UserController extends AbstractController
     }
 
     #[Route("/utilisateur/paiements", name:"app_user_showPayments")]    
-    public function showPayments(UserRepository $repo, PaymentRepository $repo4): Response
+    public function showPayments(UserRepository $repo): Response
     {
         // Récupération de l'utilisateur avec informations (array)
         $u = $this->getUser()->getUserIdentifier();        
@@ -314,5 +315,23 @@ class UserController extends AbstractController
             'payment' => $payment[0],
             $id
         ]);
+    }
+
+    // SUPPRESSION DE COMPTE PAR L'UTILISATEUR LUI-MÊME
+
+    #[Route("/utilisateur/supprimer/{id}", name:"app_user_deleteAccount")]    
+    public function deleteAccount(UserRepository $repo): Response
+    {
+        // Récupération d'un utilisateur avec informations puis suppression de la base  
+        $user = $this->getUser();     
+
+        $repo->remove($user, true);   
+
+        $session = new Session();
+        $session->invalidate();
+        
+        $this->addFlash('message', 'Utilisateur activé avec succès');
+
+        return $this->redirectToRoute('app_logout');
     }
 }

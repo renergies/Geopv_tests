@@ -34,6 +34,8 @@ class AdminController extends AbstractController
         $entityManager->persist($user[0]);
         $entityManager->flush();
 
+        $users = $repo->findAll();
+        
         // Initialisation des variables de comptage des items pour notifications
         $nb_new_tickets = 0;
         $nb_new_answers = 0;
@@ -71,8 +73,12 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_user');
         }
 
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController', 
+        return $this->render('easy-admin/dash_index.html.twig', [
+            'controller_name' => 'AdminController',
+            'users' => $users,
+            'tickets' => $tickets,
+            'payments' => $payments,
+            'answers' => $answers, 
             'nb_new_tickets' => $nb_new_tickets, 
             'nb_new_answers' => $nb_new_answers, 
             'nb_new_payments' => $nb_new_payments,

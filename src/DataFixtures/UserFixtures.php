@@ -27,10 +27,11 @@ class UserFixtures extends Fixture
         $admin->setCity('LYON');
         $admin->setIsAppAcces(1);
         $admin->setPassword(
-            $this->passwordEncoder->hashPassword($admin, 'admin')    // l'admin devra changer le mdp
-        );
+            $this->passwordEncoder->hashPassword($admin, 'admin') // l'admin devra changer le mdp      
+        );      
         $admin->setCreatedAt(new \DateTimeImmutable());
         $admin->setLastLoginAt(new \DateTimeImmutable());
+
         $manager->persist($admin);
 
         // Génération d'une DataFixtures de fausses données d'utilisateurs via FakerPHP
@@ -48,7 +49,7 @@ class UserFixtures extends Fixture
             $user->setZipcode(str_replace(' ', '', $faker->postcode()));
             $user->setCity($faker->city());
             $user->setPassword(
-                $this->passwordEncoder->hashPassword($user, $faker->password())    // l'admin devra changer le mdp
+                $this->passwordEncoder->hashPassword($user, $faker->password())    
             );
             $user->setCreatedAt(new \DateTimeImmutable());
             $user->setLastLoginAt(new \DateTimeImmutable());

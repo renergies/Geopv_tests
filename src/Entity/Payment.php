@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\PaymentRepository;
+use DateInterval;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PaymentRepository;
 
 #[ORM\Entity(repositoryClass: PaymentRepository::class)]
 class Payment
@@ -41,6 +43,9 @@ class Payment
 
     #[ORM\Column]
     private ?float $price_unit = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $current = null;
 
     public function __construct()
     {
@@ -156,6 +161,25 @@ class Payment
     public function setPriceUnit(float $price_unit): self
     {
         $this->price_unit = $price_unit;
+
+        return $this;
+    }
+
+    public function getPaymentD7D(): ?\DateTimeImmutable
+    {
+        $date = new DateTimeImmutable("now");
+        $newDate = $date->sub(new DateInterval('P7D'));
+        return $newDate;
+    }
+
+    public function isCurrent(): ?bool
+    {
+        return $this->current;
+    }
+
+    public function setCurrent(?bool $current): self
+    {
+        $this->current = $current;
 
         return $this;
     }

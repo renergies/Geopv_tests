@@ -34,12 +34,18 @@
             {% if app.user %}                
                 <div class="dropdown text-center">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user"></i> Connecté
+                    <i class="fas fa-user"></i> Connecté 
                   </a>
                   <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
+                    {% if app.user.roles == '["ROLE_ADMIN"]' %}
+                    <li>
+                        <a class="dropdown-item" href="{{ path('app_admin_dash', {id: app.user.id}) }}"><i class="fas fa-address-card"></i> Tableau de bord</a>
+                    </li>
+                    {% else %}
                     <li>
                         <a class="dropdown-item" href="{{ path('app_user_dash', {id: app.user.id}) }}"><i class="fas fa-address-card"></i> Tableau de bord</a>
                     </li>
+                    {% endif %}
                     <li>
                         <a class="dropdown-item" href="{{ path('app_user', {id: app.user.id}) }}"><i class="fas fa-user-edit"></i> Profil</a>
                     </li>   

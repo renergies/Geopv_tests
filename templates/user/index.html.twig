@@ -43,6 +43,9 @@
                 
             </div>
         </div>
+        <div class="row text-center">
+            <a href="{{path('app_user_deleteAccount', {id: app.user.id} )}}" onclick="return confirm('Êtes vous certain de vouloir supprimer votre compte ?');" class="btn btn-danger btn-lg mb-3 w-50"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer votre compte</a>
+        </div>        
     </section>    
     
 {% endblock %}

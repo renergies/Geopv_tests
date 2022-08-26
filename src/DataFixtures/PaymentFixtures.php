@@ -21,7 +21,8 @@ class PaymentFixtures extends Fixture implements DependentFixtureInterface
             // Utilisateur et produit randoms;
             $payment = new Payment();
             // Status est l'état de la formule/produit c'est à dire soit: ouvert / en_attente / payé            
-            $payment->setStatus(rand(1, 3));           
+            $payment->setStatus(rand(1, 3));          
+            $payment->setCurrent(1);
 
             if( $payment->getStatus() == 3 )
             {
@@ -31,6 +32,7 @@ class PaymentFixtures extends Fixture implements DependentFixtureInterface
                 $date = new DateTimeImmutable("now");
                 // $current = $date->format('Y-m-d H:m:s');
                 $payment->setCompletedAt($date);
+                $payment->setCurrent(0);
             } else {
                 $payment->setCompletedAt(null);             
             }

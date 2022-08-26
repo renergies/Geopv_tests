@@ -84,6 +84,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $nb_payments = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $resetToken = null;
+
     #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $last_login_at = null;
 
@@ -431,6 +434,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNbPayments(?int $nb_payments): self
     {
         $this->nb_payments = $nb_payments;
+
+        return $this;
+    }      
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
 
         return $this;
     }
