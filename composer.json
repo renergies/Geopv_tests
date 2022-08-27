@@ -103,8 +103,9 @@
         "compile": [
             "php bin/console doctrine:migrations:migrate"
         ],        
-        "test": "phpunit"   
-}
+        "test": [
+            "phpunit"
+        ]    
     },
     "conflict": {
         "symfony/symfony": "*"
